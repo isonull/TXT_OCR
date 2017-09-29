@@ -1,0 +1,19 @@
+Threshold:
+use different method to threshold and group different results;
+try to use matrix such as 1,1,1 1,1,1 1,1,1 to deal with noise;   DONE
+for a region, try to use distribution to classify blank,non-blank, not word space, and do the threshold;
+
+detection:
+for slant image, try to use gaussian distribution and use the varience matrix to form the block;
+for bad noise, try to delete small cluster from the image;
+use entropy to detect useless region
+
+char recognition:
+use context to help determine some vague recognition, context data is fetched from web
+first detection use clustering diff min algo to roughly get a training set.
+
+restructure the paper to pdf file:
+
+
+Dist:
+if the set of data is small, try take avr over a region to smooth the data
