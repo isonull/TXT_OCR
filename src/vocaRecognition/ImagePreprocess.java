@@ -159,6 +159,17 @@ public class ImagePreprocess {
 		return image;
 	}
 
+	public static BufferedImage makeBinImage(boolean[] binData, int width, int height) {
+		BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_BYTE_BINARY);
+		WritableRaster raster = image.getRaster();
+		byte[] data = new byte[height * width];
+		for (int i = 0; i < width * height; i++) {
+			data[i] = (byte) (binData[i] ? 0 : 0x000000FF);
+		}
+		raster.setDataElements(0, 0, width, height, data);
+		return image;
+	}
+
 	public static BufferedImage makeByteGrayImage(int[][] grayData, int xBase, int xLimit, int yBase, int yLimit) {
 
 		int height = yLimit - yBase;
@@ -178,6 +189,20 @@ public class ImagePreprocess {
 
 		raster.setDataElements(0, 0, width, height, data);
 
+		return image;
+	}
+
+	public static BufferedImage makeByteGrayImage(int[] grayData, int width, int height) {
+
+		BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_BYTE_GRAY);
+		WritableRaster raster = image.getRaster();
+
+		byte[] data = new byte[height * width];
+		for (int y = 0; y < grayData.length; ++y) {
+			data[y] = (byte) grayData[y];
+		}
+
+		raster.setDataElements(0, 0, width, height, data);
 		return image;
 	}
 

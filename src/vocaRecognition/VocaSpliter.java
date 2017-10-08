@@ -5,35 +5,32 @@ import java.util.List;
 
 public class VocaSpliter {
 
-	// public static int[][] split(boolean[][] image, int[][] vocaRects) {
-	// int[][] splitPositions = new int[vocaRects.length][];
-	// for (int[] rect : vocaRects) {
-	//
-	// }
-	// return splitPositions;
-	// }
+	public static int[][] split(boolean[][] image, int[][] vocaRects) {
+		int[][] splitPositions = new int[vocaRects.length][];
+		for (int[] rect : vocaRects) {
+
+		}
+		return splitPositions;
+	}
 
 	private static int boundYieldRatio = 2;
 
-	public static List<Integer> NaiveHorizontalSplit(boolean[][] image, int[] rect, int minWidth, int maxWidth) {
-		int[] proj = getProjection(image, rect);
+	public static List<int[]> naiveCharDetection(boolean[][] image, int[] rect, int minWidth, int maxWidth) {
+		int[] proj = getVerticalProjection(image, rect);
 		int boundary = Integer.MAX_VALUE;
 		List<Integer> splitPos = new ArrayList<>();
 		for (int i : proj) {
 			boundary = i < boundary ? i : boundary;
 		}
 
-		boundary *= boundYieldRatio;
+		// boundary *= boundYieldRatio;
 
 		int prevPos = 0;
+		splitPos.add(prevPos);
 		for (int i = 0; i < proj.length; ++i) {
-			if (proj[i] <= boundary) {
+			if (proj[i] <= boundary && i - prevPos >= minWidth) {
 				splitPos.add(i);
-			}
-		}
-		if (!splitPos.isEmpty()) {
-			if (splitPos.get(splitPos.size() - 1) < rect[2]) {
-				splitPos.add(rect[2]);
+				prevPos = i;
 			}
 		}
 
@@ -41,7 +38,11 @@ public class VocaSpliter {
 
 	}
 
-	public static int[] getProjection(boolean[][] image, int[] rect) {
+	public static List<int[]> naiveCharDetectionByCluster(boolean[][] image, boolean detectVal, int[] rect, int range) {
+		return ClusterDetection.detect(image, detectVal, range, rect[0], rect[2], rect[1], rect[3]);
+	}
+
+	public static int[] getVerticalProjection(boolean[][] image, int[] rect) {
 		int[] proj = new int[rect[2]];
 		for (int x = rect[0]; x < rect[0] + rect[2]; x++) {
 			proj[x - rect[0]] = 0;

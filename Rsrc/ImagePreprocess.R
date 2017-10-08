@@ -4,3 +4,12 @@ showDist <- function(vector,path){
   plot(hist(vector,breaks = bks))
   dev.off()
 }
+
+clusterOutputCSV = function(pathIn,pathOut,cens=60,maxCens = 100){
+  data = read.csv(pathIn)
+  cst= bclust(data,centers =cens,maxcluster = maxCens )
+  cenMat = centers.bclust(cst,cens)
+  cenFrame = data.frame(cenMat)
+  write.csv(cenFrame,pathOut)
+}
+  

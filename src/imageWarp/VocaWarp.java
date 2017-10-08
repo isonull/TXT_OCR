@@ -6,9 +6,9 @@ import java.util.List;
 import vocaRecognition.VocaSpliter;
 
 public class VocaWarp {
-	ImageWarp imageWarp;
+	protected ImageWarp imageWarp;
 	private int[] posInfo;
-	private ArrayList<CharWarp> charWarp;
+	private ArrayList<CharWarp> charWarpArr;
 
 	public VocaWarp(ImageWarp imgWarp, int[] rect) {
 		imageWarp = imgWarp;
@@ -20,11 +20,14 @@ public class VocaWarp {
 	}
 
 	public ArrayList<CharWarp> getCharWarps() {
-		return charWarp;
+		return charWarpArr;
 	}
 
-	public void generateCharWarps(int minWidth, int maxWidth) throws Exception {
-		List<Integer> splitPos = VocaSpliter.NaiveHorizontalSplit(imageWarp.getBinData(), posInfo, minWidth, maxWidth);
-
+	public void generateNaiveCharWarps(int range) throws Exception {
+		charWarpArr = new ArrayList<>();
+		List<int[]> charRects = VocaSpliter.naiveCharDetectionByCluster(imageWarp.getBinData(), true, posInfo, range);
+		for (int[] rect : charRects) {
+			charWarpArr.add(new CharWarp(this, rect));
+		}
 	}
 }

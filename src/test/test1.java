@@ -11,7 +11,7 @@ import org.rosuda.JRI.Rengine;
 import rSupport.UniqueRengine;
 import vocaRecognition.ImageOutput;
 import vocaRecognition.ImagePreprocess;
-import vocaRecognition.VocaDetection;
+import vocaRecognition.ClusterDetection;
 import vocaRecognition.VocaRecognition;
 
 public class test1 {
@@ -44,7 +44,7 @@ public class test1 {
 		BufferedImage imageArrBinAvr = ImagePreprocess.makeBinImage(arrBinAvr);
 		System.out.println("mkBinImage done");
 		// ArrayList<int[]> rects = VocaDetection.detect(arrBin, true, 10);
-		ArrayList<int[]> rectsAvr = VocaDetection.detect(arrBinAvr, true, 10);
+		ArrayList<int[]> rectsAvr = ClusterDetection.detect(arrBinAvr, true, 10);
 		System.out.println("detect done");
 
 		// BufferedImage imageOut = ImageOutput.addRectangles(imageArrBin,
